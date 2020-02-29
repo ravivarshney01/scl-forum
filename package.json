@@ -1,0 +1,11 @@
+{
+  "name": "scl-forum",
+  "version": "1.0.0",
+  "description": "A Supply Chain and Logistics forum",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ravi Varshney",
+  "license": "ISC"
+}
