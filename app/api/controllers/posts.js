@@ -9,7 +9,8 @@ module.exports = {
         var k = new postModel();
         k.username = req.body.username;
         k.content = req.body.content;
-        k.posted_on = req.body.time;
+        k.title = req.body.title;
+        k.posted_on = Date.now();
         k.save().then((r, err) => {
             if (err) {
                 return res.status(400).json({
@@ -20,7 +21,7 @@ module.exports = {
                 return res.json({
                     error: false,
                     message: "Post added successfully",
-                    data: r
+                    data: k
                 });
             }
         });
@@ -54,7 +55,7 @@ module.exports = {
             }
             else {
                 for (let post of posts) {
-                    postsList.push({ id: post._id, username: post.username, content: post.content, comments: post.comments, likes: post.likes, posted_on: post.posted_on })
+                    postsList.push({ id: post._id, username: post.username, title: post.title, content: post.content, comments: post.comments, likes: post.likes, posted_on: post.posted_on })
                 }
                 res.json({
                     error: false,
@@ -85,7 +86,7 @@ module.exports = {
                     else {
                         for (let post of posts) {
                             if (post.username == req.params.username) {
-                                postsList.push({ id: post._id, username: post.username, content: post.content, comments: post.comments, likes: post.likes, posted_on: post.posted_on })
+                                postsList.push({ id: post._id, username: post.username, title: post.title, content: post.content, comments: post.comments, likes: post.likes, posted_on: post.posted_on })
                             }
                         }
                         res.json({
@@ -121,7 +122,7 @@ module.exports = {
                     else {
                         for (let post of posts) {
                             if (validUsers.includes(post.username)) {
-                                postsList.push({ id: post._id, username: post.username, content: post.content, comments: post.comments, likes: post.likes, posted_on: post.posted_on })
+                                postsList.push({ id: post._id, username: post.username, title: post.title, content: post.content, comments: post.comments, likes: post.likes, posted_on: post.posted_on })
                             }
                         }
                         res.json({
@@ -187,7 +188,6 @@ module.exports = {
                 });
             }
         })
-
     },
 
     deleteComment: function (req, res, next) {
@@ -201,7 +201,7 @@ module.exports = {
             else {
                 res.json({
                     error: false,
-                    message: "COmment deleted.",
+                    message: "Comment deleted.",
                     data: r
                 });
             }

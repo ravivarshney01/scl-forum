@@ -5,6 +5,7 @@ const fs = require("fs");
 
 module.exports = {
    create: function (req, res, next) {
+      console.log(req.body)
       userModel.create({ name: req.body.name, email: req.body.email, password: req.body.password, username: req.body.username }, function (err, result) {
          if (err) {
             return res.status(400).json({
@@ -32,18 +33,17 @@ module.exports = {
                });
             } else {
                if (bcrypt.compareSync(req.body.password, userInfo.password)) {
-                  const token = jwt.sign({ id: userInfo._id }, req.app.get('secretKey'));
-                  res.json({
+                  const token = jwt.sign({ id: userInfo._id, name: userInfo.name, email: userInfo.email, username: userInfo.username }, req.app.get('secretKey'));
+                  return res.json({
                      error: false,
                      message: "User found. Login Successful",
                      data: userInfo,
                      token: token
                   });
                } else {
-                  res.json({
+                  return res.status(400).json({
                      error: true,
                      message: "Invalid email or password!",
-                     data: null
                   });
                }
             }
