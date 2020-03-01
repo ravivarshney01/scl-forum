@@ -1,0 +1,7 @@
+.notoolbar >.ql-toolbar.ql-snow{
+    display: none;
+}
+
+.editable > .ql-container.ql-snow >.ql-editor{
+    min-height: 18rem;
+}
