@@ -12,6 +12,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 class Login extends Component {
   constructor() {
@@ -76,29 +77,31 @@ class Login extends Component {
               </Typography>
               <p className="grey-text text-darken-1"></p>
             </div>
-            <form noValidate onSubmit={this.onSubmit}>
-              <div>
-                <FormControl>
-                  <InputLabel htmlFor="email">Email</InputLabel>
-                  <Input
-                    id="email"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                  />
-                </FormControl>
-              </div>
-              <div>
-                <FormControl>
-                  <InputLabel htmlFor="password">Password</InputLabel>
-                  <Input
-                    id="password"
-                    type={this.state.showPassword ? "text" : "password"}
-                    value={this.state.password}
-                    onChange={this.onChange}
-                  />
-                </FormControl>
-              </div>
-            </form>
+            <ValidatorForm
+              onSubmit={this.onSubmit}
+              onError={errors => console.log(errors)}
+            >
+              <TextValidator
+                label="Email"
+                name="email"
+                id="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                validators={["required", "isEmail"]}
+                errorMessages={["this field is required", "email is not valid"]}
+              />
+              <br />
+              <TextValidator
+                label="Password"
+                type="password"
+                name="password"
+                id="password"
+                errorMessages={["this field is required"]}
+                value={this.state.password}
+                validators={["required"]}
+                onChange={this.onChange}
+              />
+            </ValidatorForm>
             <Typography gutterBottom color="error">
               {this.props.errors.message}
             </Typography>

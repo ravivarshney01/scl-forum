@@ -45,7 +45,7 @@ class Dashboard extends Component {
     this.props.logoutUser();
   };
   fetchPosts() {
-    axios.get("/posts").then(res => {
+    axios.get("/posts/all").then(res => {
       if (res.data.data) {
         this.setState({
           posts: res.data.data
